@@ -1,4 +1,4 @@
-package ru.gb.oseminar;
+package OOP_Course.Lesson2.Seminar.OOPSeminar2.src.main.java.ru.gb.oseminar;
 
 public class Human extends Actor {
 

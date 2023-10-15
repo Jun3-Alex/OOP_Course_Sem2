@@ -1,19 +1,29 @@
-package ru.gb.oseminar;
+package OOP_Course.Lesson2.Seminar.OOPSeminar2.src.main.java.ru.gb.oseminar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Market implements MarketBehaviour, QueueBehaviour {
+public class Market implements MarketBehaviour, QueueBehaviour, Personal.PersonalBehavior {
     private final List<Actor> queue;
-
+    private final List<Personal> personal;
     public Market(){
         this.queue = new ArrayList<>();
+        this.personal = new ArrayList<>();
+    }
+
+
+    public boolean isMarketOpen(){
+        return queue.isEmpty() && !personal.isEmpty();
     }
 
     @Override
     public void acceptToMarket(Actor actor) {
-        System.out.println(actor.getName() + " пришел в магазин");
-        takeInQueue(actor);
+        if (!isMarketOpen()) {
+            System.out.println(actor.getName() + " пришел в магазин");
+            takeInQueue(actor);
+        }else {
+            System.out.println("Магазин закрыт");
+        }
     }
 
     @Override
@@ -63,9 +73,39 @@ public class Market implements MarketBehaviour, QueueBehaviour {
     }
 
     @Override
+    public void openMarket() {
+        System.out.println("Магазин открыт");
+    }
+
+    @Override
+    public void closeMarket() {
+        if(queue.isEmpty())
+            System.out.println("Магазин закрыт");
+    }
+
+    @Override
     public void update() {
         takeOrders();
         giveOrders();
         releaseFromQueue();
+    }
+
+    @Override
+    public void cameToJob(Personal personal) {
+        System.out.println(personal.getRole() + " " + personal.getName() + " пришел на работу");
+    }
+
+    @Override
+    public void leftJob(Personal personal) {
+        System.out.println(personal.getRole() + " " + personal.getName() + " ушел с работы");
+    }
+
+    @Override
+    public void working(Personal personal) {
+        System.out.println(personal.getRole() + " " + personal.getName() + " работает");
+    }
+
+    public List<Personal> getPersonal() {
+        return personal;
     }
 }
